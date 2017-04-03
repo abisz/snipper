@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20170331125131) do
   enable_extension "plpgsql"
 
   create_table "snippets", force: :cascade do |t|
-    t.string   "titel"
+    t.string   "title"
     t.string   "language"
     t.text     "code"
     t.datetime "created_at", null: false

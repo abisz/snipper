@@ -17,7 +17,7 @@ class SnippetsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create snippet" do
     assert_difference('Snippet.count') do
-      post snippets_url, params: { snippet: { code: @snippet.code, language: @snippet.language, titel: @snippet.titel } }
+      post snippets_url, params: { snippet: { code: @snippet.code, language: @snippet.language, title: @snippet.title } }
     end
 
     assert_redirected_to snippet_url(Snippet.last)
@@ -34,7 +34,7 @@ class SnippetsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update snippet" do
-    patch snippet_url(@snippet), params: { snippet: { code: @snippet.code, language: @snippet.language, titel: @snippet.titel } }
+    patch snippet_url(@snippet), params: { snippet: { code: @snippet.code, language: @snippet.language, title: @snippet.title } }
     assert_redirected_to snippet_url(@snippet)
   end
 
