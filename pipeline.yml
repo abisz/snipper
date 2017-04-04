@@ -4,8 +4,30 @@ resources:
     type: git
     source:
       uri: "https://github.com/abisz/snipper.git"
+      branch: master
+  - name: dockerfile
+    type: git
+    source:
+      uri: "https://github.com/abisz/snipper.git"
+      branch: master
+      paths: [Dockerfile]
+  - name: docker-image
+    type: docker-image
+    source:
+      repository: abisz/snipper
+      email: {{docker_email}}
+      username: {{docker_username}}
+      password: {{docker_password}}
+
 
 jobs:
+- name: build-stage
+  plan:
+  - get: dockerfile
+    trigger: true
+  - put: docker-image
+    params: {build: dockerfile}
+
 - name: commit-stage
   plan:
   - get: git-repository
@@ -19,7 +41,8 @@ jobs:
 
       image_resource:
         type: docker-image
-        source: { repository: ruby, tag: 2.4.0-alpine }
+        source:
+          repository: abisz/snipper
 
       run:
         path: sh
@@ -28,13 +51,43 @@ jobs:
           - -exc
           - |
             bundle install
-            rspec
-- name: deploy-stage
+            rails db:setup
+            rails test
+
+- name: acceptance-stage
   serial: true
   plan:
   - get: git-repository
     trigger: true
     passed: [commit-stage]
+  - task: run-acceptance-tests
+    config:
+      platform: linux
+
+      inputs:
+      - name: git-repository
+
+      image_resource:
+        type: docker-image
+        source:
+          repository: abisz/snipper
+
+      run:
+        path: sh
+        dir: git-repository
+        args:
+          - -exc
+          - |
+            bundle install
+            rails db:setup
+            rails test
+
+- name: deploy-stage
+  serial: true
+  plan:
+  - get: git-repository
+    trigger: true
+    passed: [acceptance-stage]
   - task: deploy-heroku
     params:
       HEROKU_EMAIL: {{heroku_email}}
@@ -60,4 +113,4 @@ jobs:
               login $HEROKU_EMAIL
               password $HEROKU_TOKEN
             EOF
-            git push https://git.heroku.com/quiet-chamber-61390.git master:refs/heads/master
+            git push https://git.heroku.com/mighty-wildwood-45498.git master:refs/heads/master
