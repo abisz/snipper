@@ -46,7 +46,6 @@ jobs:
 
       params:
         RAILS_ENV: test
-        TEST_DB_HOST: localhost
 
       run:
         path: sh
@@ -75,6 +74,9 @@ jobs:
         type: docker-image
         source:
           repository: abisz/snipper
+
+      params:
+        RAILS_ENV: test
 
       run:
         path: sh
