@@ -51,8 +51,9 @@ jobs:
           - -exc
           - |
             bundle install
-            rails db:setup
-            rails test
+            bundle exec rails db:create db:schema:load --trace
+            bundle exec rails db:migrate
+            bundle exec rails test
 
 - name: acceptance-stage
   serial: true
