@@ -44,6 +44,10 @@ jobs:
         source:
           repository: abisz/snipper
 
+      params:
+        RAILS_ENV: test
+        TEST_DB_HOST: localhost
+
       run:
         path: sh
         dir: git-repository
