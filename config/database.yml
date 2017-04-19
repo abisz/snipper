@@ -12,10 +12,15 @@ development: &default
   password:
   host: db
 
+#test:
+#  <<: *default
+#  database: snipper_test
+#  host: <%= ENV.fetch("TEST_DB_HOST") { "db" } %>
 test:
-  <<: *default
-  database: snipper_test
-  host: <%= ENV.fetch("TEST_DB_HOST") { "db" } %>
+  adapter: sqlite3
+  pool: 5
+  timeout: 5000
+  database: db/test.sqlite3
 
 production:
   <<: *default

@@ -19,3 +19,5 @@
 .idea
 
 credentials.yml
+
+db/test.sqlite3
