@@ -15,10 +15,6 @@ development: &default
   # host: db
   host: localhost
 
-#test:
-#  <<: *default
-#  database: snipper_test
-#  host: <%= ENV.fetch("TEST_DB_HOST") { "db" } %>
 test:
   adapter: sqlite3
   pool: 5

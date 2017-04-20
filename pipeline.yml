@@ -55,7 +55,8 @@ jobs:
           - |
             bundle install
             rails db:setup
-            rails test
+            rails test:controllers
+            rails test:models
 
 - name: acceptance-stage
   serial: true
@@ -120,3 +121,4 @@ jobs:
               password $HEROKU_TOKEN
             EOF
             git push https://git.heroku.com/mighty-wildwood-45498.git master:refs/heads/master
+            heroku run rails db:migrate
