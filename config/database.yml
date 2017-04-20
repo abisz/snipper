@@ -6,14 +6,11 @@ default: &default
 development: &default
   adapter: postgresql
   encoding: unicode
-  # database: snipper_development
-  database: app-dev
+  database: snipper_development
   pool: 5
-  # username: postgres
-  username: user
+  username: postgres
   password:
-  # host: db
-  host: localhost
+  host: db
 
 test:
   adapter: sqlite3
