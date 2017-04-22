@@ -31,6 +31,9 @@ fi
 echo ${ERROR_COUNT} > last-count.txt
 
 echo "push logs to git"
+git config --global user.email $1
+git config --global user.name $2
+
 git add .
 git commit -m "brakeman output log"
 git push -u origin brakeman
