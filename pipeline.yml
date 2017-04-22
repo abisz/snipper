@@ -48,15 +48,8 @@ jobs:
         RAILS_ENV: test
 
       run:
-        path: sh
-        dir: git-repository
-        args:
-          - -exc
-          - |
-            bundle install
-            rails db:setup
-            rails test:controllers
-            rails test:models
+        path: bin/commit-stage.sh
+
 
 - name: acceptance-stage
   serial: true
@@ -121,4 +114,5 @@ jobs:
               password $HEROKU_TOKEN
             EOF
             git push https://git.heroku.com/mighty-wildwood-45498.git master:refs/heads/master
-            heroku run rails db:migrate
+#            heroku not available in concouse
+#            heroku run rails db:migrate
