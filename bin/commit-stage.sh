@@ -18,6 +18,7 @@ ERROR_COUNT=$( cat output.json | jq .scan_info.security_warnings )
 rm output.json
 
 echo "git checkout brakeman"
+git fetch origin
 git checkout --track origin/brakeman
 
 LAST_ERROR_COUNT=$( cat last-count.txt )
