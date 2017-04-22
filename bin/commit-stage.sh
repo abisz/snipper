@@ -6,19 +6,21 @@ bundle install
 echo "rails db:setup"
 rails db:setup
 
-echo "rails test:controllers"
+echo "rails test"
 rails test:controllers
-echo "rails test:models"
 rails test:models
-
-echo "git checkout brakeman"
-git checkout brakeman
 
 echo "brakeman -z -q -o output.json"
 brakeman -z -q -o output.json
 
 ERROR_COUNT=$( cat output.json | jq .scan_info.security_warnings )
-LAST_ERROR_COUNT=$( cat last-output.json | jq .scan_info.security_warnings )
+
+rm output.json
+
+echo "git checkout brakeman"
+git checkout brakeman
+
+LAST_ERROR_COUNT=$( cat last-count.txt )
 
 if [ ${ERROR_COUNT} -gt ${LAST_ERROR_COUNT} ]
 then
@@ -26,9 +28,7 @@ then
     exit 0
 fi
 
-echo "clean up branch"
-rm last-output.json
-mv output.json last-output.json
+echo ${ERROR_COUNT} > last-count.txt
 
 echo "push logs to git"
 git add .
