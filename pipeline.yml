@@ -48,7 +48,12 @@ jobs:
         RAILS_ENV: test
 
       run:
-        path: bin/commit-stage.sh
+        path: sh
+        dir: git-repository
+        args:
+          - -exc
+          - |
+            sh ./bin/commit-stage.sh
 
 
 - name: acceptance-stage
