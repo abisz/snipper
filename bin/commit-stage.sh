@@ -44,7 +44,9 @@ git config --global user.name $2
 
 git add .
 git commit -m "brakeman output log"
-git push -u origin brakeman
+{ echo $3;
+  echo $4;
+} | git push -u origin brakeman
 
 git checkout master
 echo "Commit Stage finished"
