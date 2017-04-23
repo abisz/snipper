@@ -33,7 +33,7 @@ LAST_ERROR_COUNT=$( cat last-count.txt )
 if [ ${ERROR_COUNT} -gt ${LAST_ERROR_COUNT} ]
 then
     echo "Error count (brakeman) increased"
-    exit 0
+    exit 1
 fi
 
 echo ${ERROR_COUNT} > last-count.txt

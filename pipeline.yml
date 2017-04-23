@@ -53,7 +53,7 @@ jobs:
         args:
           - -exc
           - |
-            sh ./bin/commit-stage.sh {{github_email}} {{github_name}} {{github_username}} {{github_password}}
+            bash -e ./bin/commit-stage.sh {{github_email}} {{github_name}} {{github_username}} {{github_password}}
 
 
 - name: acceptance-stage
