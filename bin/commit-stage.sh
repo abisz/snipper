@@ -44,7 +44,7 @@ git config --global user.name $2
 
 git add .
 git commit -m "brakeman output log"
-git push -u origin brakeman
+git push https://$3:$4@github.com/abisz/snipper.git --all
 
 git checkout master
 echo "Commit Stage finished"
