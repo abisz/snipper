@@ -36,15 +36,20 @@ then
     exit 1
 fi
 
-echo ${ERROR_COUNT} > last-count.txt
+if [ ${ERROR_COUNT} -lt ${LAST_ERROR_COUNT} ]
+then
+    echo ${ERROR_COUNT} > last-count.txt
 
-echo "push logs to git"
-git config --global user.email $1
-git config --global user.name $2
+    echo "push logs to git"
+    git config --global user.email $1
+    git config --global user.name $2
 
-git add .
-git commit -m "brakeman output log"
-git push https://$3:$4@github.com/abisz/snipper.git --all
+    git add .
+    git commit -m "brakeman output log"
+    git push https://$3:$4@github.com/abisz/snipper.git --all
 
-git checkout master
+    git checkout master
+fi
+
 echo "Commit Stage finished"
+exit 0
