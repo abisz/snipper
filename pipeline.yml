@@ -55,32 +55,6 @@ jobs:
           - |
             sh ./bin/commit-stage.sh {{github_email}} {{github_name}}
 
-            echo "git checkout brakeman"
-            git fetch
-            git checkout --track origin/brakeman
-
-            LAST_ERROR_COUNT=$( cat last-count.txt )
-
-            if [ ${ERROR_COUNT} -gt ${LAST_ERROR_COUNT} ]
-            then
-                echo "Error count (brakeman) increased"
-                exit 0
-            fi
-
-            echo ${ERROR_COUNT} > last-count.txt
-
-            echo "push logs to git"
-            git config --global user.email $1
-            git config --global user.name $2
-
-            git add .
-            git commit -m "brakeman output log"
-            git push -u origin brakeman
-
-            git checkout master
-
-            echo "Commit Stage finished"
-
 
 - name: acceptance-stage
   serial: true
